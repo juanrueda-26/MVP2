@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Papel y Luna · Punto de venta</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="brand">
+      <svg class="brand__mark" viewBox="0 0 40 40" width="34" height="34" aria-hidden="true">
+        <path d="M24 4 A16 16 0 1 0 24 36 A13 13 0 1 1 24 4 Z" fill="var(--color-gold)"/>
+        <circle cx="30" cy="10" r="1.6" fill="var(--color-gold)"/>
+        <circle cx="33" cy="16" r="1" fill="var(--color-gold)"/>
+      </svg>
+      <div class="brand__text">
+        <span class="brand__name">Papel y Luna</span>
+        <span class="brand__tag">Punto de venta</span>
+      </div>
+    </div>
+
+    <nav class="tabs" id="mainNav" aria-label="Navegación principal">
+      <button class="tab" data-view="venta" aria-current="page">Nueva venta</button>
+      <button class="tab" data-view="productos">Productos</button>
+      <button class="tab" data-view="historial">Historial</button>
+    </nav>
+  </header>
+
+  <main class="app">
+
+    <!-- ===================== VISTA: NUEVA VENTA ===================== -->
+    <section id="view-venta" class="view">
+      <div class="sale-layout">
+
+        <div class="panel">
+          <div class="panel__head">
+            <h1>Nueva venta</h1>
+            <span class="pill" id="saleStamp">Venta en curso</span>
+          </div>
+
+          <label class="field">
+            <span class="field__label">Buscar producto</span>
+            <input type="search" id="productSearch" placeholder="Nombre o código interno…" autocomplete="off">
+          </label>
+
+          <ul class="search-results" id="searchResults" hidden></ul>
+
+          <div class="cart">
+            <table class="cart__table" id="cartTable">
+              <thead>
+                <tr>
+                  <th scope="col">Producto</th>
+                  <th scope="col">Precio</th>
+                  <th scope="col">Cant.</th>
+                  <th scope="col">Subtotal</th>
+                  <th scope="col"><span class="sr-only">Quitar</span></th>
+                </tr>
+              </thead>
+              <tbody id="cartBody"></tbody>
+            </table>
+            <p class="empty-state" id="cartEmpty">Aún no hay productos en esta venta. Busca uno arriba para agregarlo.</p>
+          </div>
+        </div>
+
+        <div class="panel panel--summary">
+          <h2>Resumen</h2>
+
+          <div class="totals">
+            <div class="totals__row">
+              <span>Subtotal</span>
+              <strong id="sumSubtotal">$0</strong>
+            </div>
+            <div class="totals__row totals__row--big">
+              <span>Total a pagar</span>
+              <strong id="sumTotal">$0</strong>
+            </div>
+          </div>
+
+          <fieldset class="paymethod">
+            <legend>Método de pago</legend>
+            <label class="radio">
+              <input type="radio" name="metodoPago" value="Efectivo" checked>
+              <span>Efectivo</span>
+            </label>
+            <label class="radio">
+              <input type="radio" name="metodoPago" value="Nequi">
+              <span>Nequi</span>
+            </label>
+            <label class="radio">
+              <input type="radio" name="metodoPago" value="Debe">
+              <span>Debe</span>
+            </label>
+          </fieldset>
+
+          <div id="cashFields" class="cash-fields">
+            <label class="field">
+              <span class="field__label">Valor recibido</span>
+              <input type="number" id="cashReceived" min="0" step="100" placeholder="0">
+            </label>
+            <div class="totals__row">
+              <span>Cambio</span>
+              <strong id="sumChange">$0</strong>
+            </div>
+          </div>
+
+          <p class="form-error" id="saleError" hidden></p>
+
+          <div class="panel__actions">
+            <button class="btn btn--ghost" id="btnClearSale" type="button">Vaciar venta</button>
+            <button class="btn btn--primary" id="btnConfirmSale" type="button">Confirmar venta</button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===================== VISTA: PRODUCTOS ===================== -->
+    <section id="view-productos" class="view" hidden>
+      <div class="panel">
+        <div class="panel__head">
+          <h1>Productos</h1>
+          <button class="btn btn--primary" id="btnNewProduct" type="button">+ Nuevo producto</button>
+        </div>
+
+        <label class="field field--search">
+          <span class="field__label">Buscar</span>
+          <input type="search" id="productListSearch" placeholder="Nombre, categoría o código…" autocomplete="off">
+        </label>
+
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th scope="col">Código</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Categoría</th>
+                <th scope="col">Precio</th>
+                <th scope="col">Costo</th>
+                <th scope="col">Stock</th>
+                <th scope="col"><span class="sr-only">Acciones</span></th>
+              </tr>
+            </thead>
+            <tbody id="productsBody"></tbody>
+          </table>
+        </div>
+        <p class="empty-state" id="productsEmpty" hidden>No hay productos registrados todavía.</p>
+      </div>
+    </section>
+
+    <!-- ===================== VISTA: HISTORIAL ===================== -->
+    <section id="view-historial" class="view" hidden>
+      <div class="panel">
+        <div class="panel__head">
+          <h1>Historial de ventas</h1>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th scope="col">N.º</th>
+                <th scope="col">Fecha</th>
+                <th scope="col">Método</th>
+                <th scope="col">Total</th>
+                <th scope="col"><span class="sr-only">Ver</span></th>
+              </tr>
+            </thead>
+            <tbody id="historyBody"></tbody>
+          </table>
+        </div>
+        <p class="empty-state" id="historyEmpty" hidden>Todavía no se ha cerrado ninguna venta.</p>
+      </div>
+    </section>
+
+    <!-- ===================== VISTA: FACTURA ===================== -->
+    <section id="view-factura" class="view" hidden>
+      <div class="invoice-screen">
+        <div class="invoice-screen__actions no-print">
+          <button class="btn btn--ghost" id="btnBackFromInvoice" type="button">&larr; Volver</button>
+          <button class="btn btn--primary" id="btnPrintInvoice" type="button">Imprimir / Generar PDF</button>
+        </div>
+        <div class="ticket" id="ticket"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===================== MODAL: PRODUCTO ===================== -->
+  <div class="modal-backdrop" id="productModalBackdrop" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="productModalTitle">
+      <div class="modal__head">
+        <h2 id="productModalTitle">Nuevo producto</h2>
+        <button class="modal__close" id="btnCloseModal" type="button" aria-label="Cerrar">&times;</button>
+      </div>
+
+      <form id="productForm" novalidate>
+        <input type="hidden" id="productId">
+
+        <label class="field">
+          <span class="field__label">Nombre *</span>
+          <input type="text" id="fNombre" required>
+        </label>
+
+        <div class="field-row">
+          <label class="field">
+            <span class="field__label">Categoría *</span>
+            <input type="text" id="fCategoria" required>
+          </label>
+          <label class="field">
+            <span class="field__label">Código interno *</span>
+            <input type="text" id="fCodigo" required>
+          </label>
+        </div>
+
+        <div class="field-row">
+          <label class="field">
+            <span class="field__label">Precio de venta *</span>
+            <input type="number" id="fPrecio" min="0" step="1" required>
+          </label>
+          <label class="field">
+            <span class="field__label">Costo *</span>
+            <input type="number" id="fCosto" min="0" step="1" required>
+          </label>
+        </div>
+
+        <label class="checkbox">
+          <input type="checkbox" id="fSeguimiento" checked>
+          <span>Hacer seguimiento de inventario</span>
+        </label>
+
+        <label class="field" id="stockField">
+          <span class="field__label">Stock *</span>
+          <input type="number" id="fStock" min="0" step="1">
+        </label>
+
+        <p class="form-error" id="productFormError" hidden></p>
+
+        <div class="modal__actions">
+          <button type="button" class="btn btn--ghost" id="btnCancelProduct">Cancelar</button>
+          <button type="submit" class="btn btn--primary">Guardar producto</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ===================== TOAST ===================== -->
+  <div class="toast" id="toast" hidden></div>
+
+  <script type="module" src"js/main.js"></script>
+</body>
+</html>
