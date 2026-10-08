@@ -70,16 +70,12 @@ export async function renderProductsTable() {
   filtered.forEach((p) => {
     const tr = document.createElement("tr");
     tr.innerHTML = `
-      <td><span style="font-family: var(--font-mono); font-size: .8rem;">${escapeHTML(p.codigoInterno)}</span></td>
+      <td><span style="font-family: var(--font-mono); font-size: .8rem;">${escapeHTML(p.codigo || p.codigoInterno)}</span></td>
       <td>${escapeHTML(p.nombre)}</td>
       <td>${escapeHTML(p.categoria)}</td>
-      <td>${formatCOP(p.precioVenta)}</td>
+      <td>${formatCOP(p.precioVenta || p.precio)}</td>
       <td>${formatCOP(p.costo)}</td>
       <td>${p.seguimientoInventario ? p.stock ?? 0 : "—"}</td>
-      <td style="white-space:nowrap; text-align:right;">
-        <button class="icon-btn" data-action="edit" title="Editar">✎</button>
-        <button class="icon-btn" data-action="delete" title="Eliminar">✕</button>
-      </td>
     `;
     tr.querySelector('[data-action="edit"]').addEventListener("click", () => openEditModal(p.id));
     tr.querySelector('[data-action="delete"]').addEventListener("click", () => handleDelete(p.id));
