@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<link rel="icon" href="favicon.ico" type="image/x-icon">
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Papel y Luna · Punto de venta</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Papel y Luna — POS</title>
+  
+  <!-- 1. Enlace único optimizado para las fuentes de Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..700&family=Inter:wght@400..700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  
+  <!-- 2. Enlace a tu archivo CSS dentro de la carpeta css -->
+  <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
 
@@ -259,8 +261,7 @@
     </section>
 
   </main>
-
-  <!-- ===================== MODAL: PRODUCTO ===================== -->
+<!-- ===================== MODAL: PRODUCTO ===================== -->
   <div class="modal-backdrop" id="productModalBackdrop" hidden>
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="productModalTitle">
       <div class="modal__head">
@@ -319,30 +320,31 @@
   </div>
 
   <!-- ===================== MODAL: CATEGORÍA ===================== -->
-<div class="modal-backdrop" id="categoriaModalBackdrop" hidden>
-  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="categoriaModalTitle">
-    <div class="modal__head">
-      <h2 id="categoriaModalTitle">Nueva categoría</h2>
-      <button class="modal__close" id="btnCloseCategoriaModal" type="button" aria-label="Cerrar">&times;</button>
-    </div>
-
-    <form id="categoriaForm" novalidate>
-      <input type="hidden" id="categoriaId">
-
-      <label class="field">
-        <span class="field__label">Nombre de la categoría *</span>
-        <input type="text" id="fCategoriaNombre" required autocomplete="off">
-      </label>
-
-      <p class="form-error" id="categoriaFormError" hidden></p>
-
-      <div class="modal__actions">
-        <button type="button" class="btn btn--ghost" id="btnCancelCategoria">Cancelar</button>
-        <button type="submit" class="btn btn--primary">Guardar categoría</button>
+  <div class="modal-backdrop" id="categoriaModalBackdrop" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="categoriaModalTitle">
+      <div class="modal__head">
+        <h2 id="categoriaModalTitle">Nueva categoría</h2>
+        <button class="modal__close" id="btnCloseCategoriaModal" type="button" aria-label="Cerrar">&times;</button>
       </div>
-    </form>
-  </div>
-</div>
+
+      <form id="categoriaForm" novalidate>
+        <input type="hidden" id="categoriaId">
+
+        <label class="field">
+          <span class="field__label">Nombre de la categoría *</span>
+          <input type="text" id="fCategoriaNombre" required autocomplete="off">
+        </label>
+
+        <p class="form-error" id="categoriaFormError" hidden></p>
+
+        <div class="modal__actions">
+          <button type="button" class="btn btn--ghost" id="btnCancelCategoria">Cancelar</button>
+          <button type="submit" class="btn btn--primary">Guardar categoría</button>
+        </div>
+      </form>
+    </div>
+  </div>  
+
 
   <!-- ===================== TOAST ===================== -->
   <div class="toast" id="toast" hidden></div>
